@@ -8,6 +8,5 @@ public class ParqueaderosApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ParqueaderosApplication.class, args);
-		System.out.println("chao mundo!!");
 	}
 }
