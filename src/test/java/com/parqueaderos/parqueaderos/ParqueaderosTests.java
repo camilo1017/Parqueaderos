@@ -28,10 +28,9 @@ public class ParqueaderosTests {
 	private Vigilante vigilante;
 	@Before
 	public void initTest()
-	{
+	{			
 		vehiculoObject=mock(Vehiculo.class);
-		vigilanteObject=mock(Vigilante.class);
-		
+		vigilanteObject=mock(Vigilante.class);	
 		moto=VehiculoBuilder.getInstance().withTipoVehiculo("Moto").build();
 		carro=VehiculoBuilder.getInstance().withTipoVehiculo("Carro").build();
 		vigilante=VigilanteBuilder.getInstance().build();
@@ -52,19 +51,19 @@ public class ParqueaderosTests {
 	@Test
 	public void testCobrarMotoMasDe24Horas() {
 		double resultadoObtenido=vigilante.cobrar(50, moto);
-		double resultadoEsperado=13000;
+		double resultadoEsperado=9000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMenosDe24Horas() {
 		double resultadoObtenido=vigilante.cobrar(20, moto);
-		double resultadoEsperado=6000;
+		double resultadoEsperado=4000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMasDe9HorasDespues() {
 		double resultadoObtenido=vigilante.cobrar(35, moto);
-		double resultadoEsperado=12000;
+		double resultadoEsperado=8000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test

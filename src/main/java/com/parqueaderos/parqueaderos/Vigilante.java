@@ -8,7 +8,7 @@ public class Vigilante {
 	private static final double PRECIO_HORA_CARRO=1000;
 	private static final double PRECIO_HORA_MOTO=500;
 	private static final double PRECIO_DIA_CARRO=8000;
-	private static final double PRECIO_DIA_MOTO=6000;
+	private static final double PRECIO_DIA_MOTO=4000;
 	private int nroMotos;
 	private int nroCarros;
 	private Parqueadero parqueadero;
