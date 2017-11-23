@@ -132,4 +132,10 @@ public class ParqueaderosTests {
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
+	@Test
+	public void testCalcularNumeroDeHoras() {
+		int resultadoObtenido=vigilante.CalcularHoras("2014/10/09 10:59:44", "2014/11/09 17:59:49");
+		int resultadoEsperado=32;
+		assertEquals(resultadoEsperado, resultadoObtenido);
+	}
 }

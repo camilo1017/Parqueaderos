@@ -1,5 +1,12 @@
 package com.parqueaderos.parqueaderos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 public class Vigilante {
 	private static final int NUMERO_CARROS=20;
 	private static final int NUMERO_MOTOS=10;
@@ -9,9 +16,25 @@ public class Vigilante {
 	private static final double PRECIO_HORA_MOTO=500;
 	private static final double PRECIO_DIA_CARRO=8000;
 	private static final double PRECIO_DIA_MOTO=4000;
+	private Date fechaEntrada;
+	private Date fechaSalida;
 	private int nroMotos;
 	private int nroCarros;
 	private Parqueadero parqueadero;
+	private static final int SEGUNDOS_EN_UNA_HORA= 3600;
+	public int CalcularHoras(String fechaEntradaS,String fechaSalidaS) {
+		Date dateFechaEntrada=StringToDate(fechaEntradaS, "/");
+		Date dateFechaSalida=StringToDate(fechaSalidaS, "/");
+		Calendar fechaEntrada=Calendar.getInstance();
+		Calendar fechaSalida=Calendar.getInstance();
+		fechaEntrada.setTime(dateFechaEntrada);
+		fechaSalida.setTime(dateFechaSalida);
+		long cantidadhoras= (ChronoUnit.SECONDS.between(fechaEntrada.toInstant(), fechaSalida.toInstant()));
+		double horasDecimal = (double)cantidadhoras/SEGUNDOS_EN_UNA_HORA;				
+		double horasEnMinutos =horasDecimal;
+		horasEnMinutos = Math.ceil(horasEnMinutos);		
+		return (int) horasEnMinutos;
+	}
 	public double cobrar(int horas, Vehiculo vehiculo) {
 		double cobro=0;
 		switch (vehiculo.getTipoVehiculo()) {
@@ -121,6 +144,18 @@ public class Vigilante {
 		}else {
 			return false;
 		}
+	}
+	public static Date StringToDate(String fecha,String caracter){
+		String formatoHora=" HH:mm:ss";
+		String formato="yyyy"+caracter+"MM"+caracter+"dd"+formatoHora;
+		SimpleDateFormat sdf = new SimpleDateFormat(formato, Locale.getDefault());
+		Date fechaFormato=null;
+		try {
+			sdf.setLenient(false);
+			fechaFormato=sdf.parse(fecha);
+		} catch (ParseException ex) {
+		}
+		return fechaFormato;
 	}
 	public int getNroMotos() {
 		return nroMotos;
