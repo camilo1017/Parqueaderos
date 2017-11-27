@@ -12,10 +12,13 @@ import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.parqueaderos.parqueaderos.Parqueadero;
 import com.parqueaderos.parqueaderos.Vehiculo;
 import com.parqueaderos.parqueaderos.Vigilante;
+import com.parqueaderos.parqueaderos.util.CalendarUtil;
 
 import builder.VigilanteBuilder;
+import builder.ParqueaderoBuilder;
 import builder.VehiculoBuilder;
 
 @RunWith(SpringRunner.class)
@@ -26,6 +29,7 @@ public class ParqueaderosTests {
 	private Vigilante vigilanteObject;
 	private Vehiculo carro;
 	private Vigilante vigilante;
+	private Parqueadero parqueadero;
 	@Before
 	public void initTest()
 	{			
@@ -34,42 +38,48 @@ public class ParqueaderosTests {
 		moto=VehiculoBuilder.getInstance().withTipoVehiculo("Moto").build();
 		carro=VehiculoBuilder.getInstance().withTipoVehiculo("Carro").build();
 		vigilante=VigilanteBuilder.getInstance().build();
+		parqueadero=new Parqueadero();
 	}
 	@Test
 	public void testCobrarMotoMenosDe9Horas() {
-		double resultadoObtenido=vigilante.cobrar(8, moto);
-		double resultadoEsperado=4000;
+		moto.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 12:59:49", moto);
+		double resultadoEsperado=1500;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCilindraje() {
+		moto.setMatricula("BSS345");
 		moto.setCilindraje(600);
-		double resultadoObtenido=vigilante.cobrar(8, moto);
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 22:59:49", moto);
 		double resultadoEsperado=6000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMasDe24Horas() {
-		double resultadoObtenido=vigilante.cobrar(50, moto);
-		double resultadoEsperado=9000;
+		moto.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 11:59:49", moto);
+		double resultadoEsperado=5000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMenosDe24Horas() {
-		double resultadoObtenido=vigilante.cobrar(20, moto);
+		moto.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 23:59:49", moto);
 		double resultadoEsperado=4000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMasDe9HorasDespues() {
-		double resultadoObtenido=vigilante.cobrar(35, moto);
+		moto.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 22:59:49", moto);
 		double resultadoEsperado=8000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testNoHayCuposMotos() {
-		Vigilante vigilante=VigilanteBuilder.getInstance().withNroMotos(10).build();
-		boolean resultadoObtenido=vigilante.ingresarMoto();
+		Parqueadero parqueadero=ParqueaderoBuilder.getInstance().withNroMotos(10).build();		
+		boolean resultadoObtenido=parqueadero.ingresarMoto();
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
@@ -77,44 +87,48 @@ public class ParqueaderosTests {
 	
 	@Test
 	public void testCobrarCarroMasDe24Horas() {
-		double resultadoObtenido=vigilante.cobrar(50, carro);
-		double resultadoEsperado=18000;
+		carro.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 12:59:49", carro);
+		double resultadoEsperado=11000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe9Horas() {
-		double resultadoObtenido=vigilante.cobrar(7, carro);
+		carro.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 16:59:49", carro);
 		double resultadoEsperado=7000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe24Horas() {
-		double resultadoObtenido=vigilante.cobrar(20, carro);
+		carro.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 19:59:49", carro);
 		double resultadoEsperado=8000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMasDe9HorasDespues() {
-		double resultadoObtenido=vigilante.cobrar(35, carro);
+		carro.setMatricula("BSS345");
+		double resultadoObtenido=vigilante.cobrar("2014/10/09 10:59:44", "2014/10/10 21:59:49", carro);
 		double resultadoEsperado=16000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testNoHayCuposCarros() {
-		Vigilante vigilante=VigilanteBuilder.getInstance().withNroCarros(20).build();
-		boolean resultadoObtenido=vigilante.ingresarCarro();
+		Parqueadero parqueadero=ParqueaderoBuilder.getInstance().withNroCarros(20).build();
+		boolean resultadoObtenido=parqueadero.ingresarCarro();
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testIngresarCarro() {
-		boolean resultadoObtenido=vigilante.ingresarCarro();
+		boolean resultadoObtenido=parqueadero.ingresarCarro();
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testIngresarMoto() {
-		boolean resultadoObtenido=vigilante.ingresarMoto();
+		boolean resultadoObtenido=parqueadero.ingresarMoto();
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
@@ -134,8 +148,37 @@ public class ParqueaderosTests {
 	}
 	@Test
 	public void testCalcularNumeroDeHoras() {
-		int resultadoObtenido=vigilante.CalcularHoras("2014/10/09 10:59:44", "2014/11/09 17:59:49");
-		int resultadoEsperado=32;
+		CalendarUtil calendarUtil = new CalendarUtil();
+		int resultadoObtenido=calendarUtil.calcularHoras("2014/10/09 10:59:44", "2014/10/11 14:59:49");
+		int resultadoEsperado=53;
+		assertEquals(resultadoEsperado, resultadoObtenido);
+	}
+	@Test
+	public void testObtenerDiaDeLaSemana() {
+		CalendarUtil calendarUtil = new CalendarUtil();
+		String resultadoObtenido=CalendarUtil.obtenerDiaDeLaSemana("2017/12/01 10:59:44");
+		String resultadoEsperado="Viernes";
+		assertEquals(resultadoEsperado, resultadoObtenido);
+	}
+	@Test
+	public void testValidarPlacaEspecial() {
+		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
+		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/27 10:59:44");
+		boolean resultadoEsperado=true;
+		assertEquals(resultadoEsperado, resultadoObtenido);
+	}
+	@Test
+	public void testValidarPlacaNoEspecial() {
+		moto=VehiculoBuilder.getInstance().withMatricula("BSS456").build();
+		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/28 10:59:44");
+		boolean resultadoEsperado=true;
+		assertEquals(resultadoEsperado, resultadoObtenido);
+	}
+	@Test
+	public void testValidarPlacaDiaNoHabil() {
+		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
+		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/28 10:59:44");
+		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 }
