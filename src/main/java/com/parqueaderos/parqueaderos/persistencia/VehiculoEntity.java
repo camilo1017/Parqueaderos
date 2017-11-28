@@ -5,10 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
-@Entity
-@Table(name="Vehiculo")
+@Entity(name="Vehiculo")
+@NamedQueries({
+	@NamedQuery(name = "vehiculo.findAll", query = "SELECT vehiculo from Vehiculo vehiculo")
+})
 public class VehiculoEntity implements Serializable{
 	/**
 	 * 
@@ -20,17 +23,11 @@ public class VehiculoEntity implements Serializable{
 	private String matricula;
 	
 	@Column(name="vehiculo_nombre")
-	private String nombre;
-	
-	@Column(name="vehiculo_year_model")
-	private int yearModel;
+	private String nombre;	
 	
 	@Column(name="vehiculo_cilindraje")
 	private int cilindraje;
-	
-	@Column(name="vehiculo_marca")
-	private String marca;
-	
+
 	@Column(name="vehiculo_tipo")
 	private String tipoVehiculo;
 	
@@ -46,23 +43,11 @@ public class VehiculoEntity implements Serializable{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getYearModel() {
-		return yearModel;
-	}
-	public void setYearModel(int yearModel) {
-		this.yearModel = yearModel;
-	}
 	public int getCilindraje() {
 		return cilindraje;
 	}
 	public void setCilindraje(int cilindraje) {
 		this.cilindraje = cilindraje;
-	}
-	public String getMarca() {
-		return marca;
-	}
-	public void setMarca(String marca) {
-		this.marca = marca;
 	}
 	public String getTipoVehiculo() {
 		return tipoVehiculo;

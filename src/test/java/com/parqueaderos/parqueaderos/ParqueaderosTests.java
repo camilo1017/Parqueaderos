@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
+
+import java.awt.geom.RectangularShape;
+
 import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.parqueaderos.parqueaderos.Parqueadero;
 import com.parqueaderos.parqueaderos.Vehiculo;
 import com.parqueaderos.parqueaderos.Vigilante;
+import com.parqueaderos.parqueaderos.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueaderos.util.CalendarUtil;
 
 import builder.VigilanteBuilder;
@@ -30,6 +34,7 @@ public class ParqueaderosTests {
 	private Vehiculo carro;
 	private Vigilante vigilante;
 	private Parqueadero parqueadero;
+	private ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
 	@Before
 	public void initTest()
 	{			
@@ -39,6 +44,7 @@ public class ParqueaderosTests {
 		carro=VehiculoBuilder.getInstance().withTipoVehiculo("Carro").build();
 		vigilante=VigilanteBuilder.getInstance().build();
 		parqueadero=new Parqueadero();
+		reglaPrimerLetraDeLaPlaca=new ReglaPrimerLetraDeLaPlaca();
 	}
 	@Test
 	public void testCobrarMotoMenosDe9Horas() {
@@ -135,15 +141,15 @@ public class ParqueaderosTests {
 	@Test
 	public void testValidarMatriculaQueNoEmpiecePorA() {
 		carro.setMatricula("BSS345");
-		boolean resultadoObtenido=vigilante.validarIngreso(carro);
-		boolean resultadoEsperado=true;
+		boolean resultadoObtenido=reglaPrimerLetraDeLaPlaca.validarLetraDeLaPlaca(carro);
+		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testValidarMatriculaQueEmpiecePorA() {
 		carro.setMatricula("ASS345");
-		boolean resultadoObtenido=vigilante.validarIngreso(carro);
-		boolean resultadoEsperado=false;
+		boolean resultadoObtenido=reglaPrimerLetraDeLaPlaca.validarLetraDeLaPlaca(carro);
+		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
@@ -163,21 +169,21 @@ public class ParqueaderosTests {
 	@Test
 	public void testValidarPlacaEspecial() {
 		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/27 10:59:44");
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/27 10:59:44");
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testValidarPlacaNoEspecial() {
 		moto=VehiculoBuilder.getInstance().withMatricula("BSS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/28 10:59:44");
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/28 10:59:44");
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testValidarPlacaDiaNoHabil() {
 		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlaca(moto,"2017/11/28 10:59:44");
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/28 10:59:44");
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}

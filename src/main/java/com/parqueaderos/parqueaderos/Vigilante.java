@@ -1,4 +1,6 @@
 package com.parqueaderos.parqueaderos;
+import com.parqueaderos.parqueaderos.reglas.ReglaAltoCilindraje;
+import com.parqueaderos.parqueaderos.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueaderos.util.CalendarUtil;
 
 public class Vigilante {
@@ -8,11 +10,13 @@ public class Vigilante {
 	private static final double PRECIO_HORA_MOTO=500;
 	private static final double PRECIO_DIA_CARRO=8000;
 	private static final double PRECIO_DIA_MOTO=4000;
+	ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
+	ReglaAltoCilindraje reglaAltoCilindraje;
 	public double cobrar(String fechaEntrada, String fechaSalida, Vehiculo vehiculo) {
 		double cobro=0;
 		Parqueadero parqueadero=new Parqueadero();
 		CalendarUtil calendarUtil=new CalendarUtil();
-		boolean ingresoEsValido=validacionPlaca(vehiculo, fechaEntrada);
+		boolean ingresoEsValido=validacionPlacaFecha(vehiculo, fechaEntrada);
 		int horas=calendarUtil.calcularHoras(fechaEntrada, fechaSalida);
 		switch (vehiculo.getTipoVehiculo()) {
         case TIPO_MOTO:
@@ -46,7 +50,8 @@ public class Vigilante {
     	}else {
     		cobro+=cobrarPorDia(horas,vehiculo);  		
     	}
-    	cobro+=cobrarCilindraje(vehiculo.getCilindraje());
+		reglaAltoCilindraje=new ReglaAltoCilindraje();
+    	cobro+=reglaAltoCilindraje.cobrarCilindraje(vehiculo.getCilindraje());
     	return cobro;
 	}
 	
@@ -70,13 +75,6 @@ public class Vigilante {
 		case TIPO_MOTO:
 			return PRECIO_DIA_MOTO;
 		default:
-			return 0;
-		}		
-	}
-	public double cobrarCilindraje(int cilindraje) {
-		if(cilindraje>500) {
-			return 2000;
-		}else {
 			return 0;
 		}		
 	}
@@ -105,17 +103,10 @@ public class Vigilante {
 		
 		return cobro;
 	}
-	public boolean validarIngreso(Vehiculo vehiculo) {
-		String[] arrayMatricula=vehiculo.getMatricula().split("");
-		boolean validacion=false;
-		if(!arrayMatricula[0].equals("A"))
-			validacion=true;
-		return validacion;
-	}
-	public boolean validacionPlaca(Vehiculo vehiculo,String fechaEntrada) {
-		if(!validarIngreso(vehiculo) && (CalendarUtil.obtenerDiaDeLaSemana(fechaEntrada).equals("Domingo") || CalendarUtil.obtenerDiaDeLaSemana(fechaEntrada).equals("Lunes")) || validarIngreso(vehiculo)) {		
-			return true;
-		}
-		return false;
+	public boolean validacionPlacaFecha(Vehiculo vehiculo,String fechaEntrada) {
+		reglaPrimerLetraDeLaPlaca=new ReglaPrimerLetraDeLaPlaca();
+		boolean validacionLetraDeLaPlaca=reglaPrimerLetraDeLaPlaca.validarLetraDeLaPlaca(vehiculo);
+		boolean validacionDiaHabil=reglaPrimerLetraDeLaPlaca.validacionDiaHabil(fechaEntrada);
+		return ((validacionLetraDeLaPlaca && validacionDiaHabil) || !validacionLetraDeLaPlaca);
 	}
 }
