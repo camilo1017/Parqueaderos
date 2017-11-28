@@ -1,6 +1,6 @@
-package builder;
+package com.parqueaderos.parqueaderos.builder;
 
-import com.parqueaderos.parqueaderos.Vigilante;
+import com.parqueaderos.parqueaderos.dominio.Vigilante;
 
 public class VigilanteBuilder {
 	private int nroMotos;

@@ -1,6 +1,6 @@
 package com.parqueaderos.parqueaderos.reglas;
 
-import com.parqueaderos.parqueaderos.Vehiculo;
+import com.parqueaderos.parqueaderos.dominio.Vehiculo;
 import com.parqueaderos.parqueaderos.util.CalendarUtil;
 
 public class ReglaPrimerLetraDeLaPlaca {

@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos;
+package com.parqueaderos.parqueaderos.dominio;
 
 public class Vehiculo {
 	private String matricula;

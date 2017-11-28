@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos;
+package com.parqueaderos.parqueaderos.dominio;
 import com.parqueaderos.parqueaderos.reglas.ReglaAltoCilindraje;
 import com.parqueaderos.parqueaderos.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueaderos.util.CalendarUtil;
