@@ -46,3 +46,10 @@ cobertura {
     coverageReportDir = new File("$buildDir/reports/cobertura") 
 }
 test.finalizedBy(project.tasks.cobertura)
+test {
+ 	jacoco {
+		append = false
+		destinationFile = file("build/jacoco/jacocoTest.exec")
+	}
+	reports.junitXml.destination = file("jacoco/test-results")
+}
