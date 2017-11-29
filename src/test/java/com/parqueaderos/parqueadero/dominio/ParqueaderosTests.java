@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos.dominio;
+package com.parqueaderos.parqueadero.dominio;
 
 
 import static org.junit.Assert.assertEquals;
@@ -15,14 +15,11 @@ import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.parqueaderos.parqueaderos.builder.ParqueaderoBuilder;
-import com.parqueaderos.parqueaderos.builder.VehiculoBuilder;
-import com.parqueaderos.parqueaderos.builder.VigilanteBuilder;
-import com.parqueaderos.parqueaderos.dominio.Parqueadero;
-import com.parqueaderos.parqueaderos.dominio.Vehiculo;
-import com.parqueaderos.parqueaderos.dominio.Vigilante;
-import com.parqueaderos.parqueaderos.reglas.ReglaPrimerLetraDeLaPlaca;
-import com.parqueaderos.parqueaderos.util.CalendarUtil;
+import com.parqueaderos.parqueadero.builder.ParqueaderoBuilder;
+import com.parqueaderos.parqueadero.builder.VehiculoBuilder;
+import com.parqueaderos.parqueadero.builder.VigilanteBuilder;
+import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
+import com.parqueaderos.parqueadero.util.CalendarUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

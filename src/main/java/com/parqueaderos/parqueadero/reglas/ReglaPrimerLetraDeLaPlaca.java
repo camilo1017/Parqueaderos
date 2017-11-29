@@ -1,7 +1,7 @@
-package com.parqueaderos.parqueaderos.reglas;
+package com.parqueaderos.parqueadero.reglas;
 
-import com.parqueaderos.parqueaderos.dominio.Vehiculo;
-import com.parqueaderos.parqueaderos.util.CalendarUtil;
+import com.parqueaderos.parqueadero.dominio.Vehiculo;
+import com.parqueaderos.parqueadero.util.CalendarUtil;
 
 public class ReglaPrimerLetraDeLaPlaca {
 	public boolean validarLetraDeLaPlaca(Vehiculo vehiculo) {

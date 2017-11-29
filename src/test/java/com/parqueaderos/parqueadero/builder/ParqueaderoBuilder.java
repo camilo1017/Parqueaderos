@@ -1,6 +1,6 @@
-package com.parqueaderos.parqueaderos.builder;
+package com.parqueaderos.parqueadero.builder;
 
-import com.parqueaderos.parqueaderos.dominio.Parqueadero;
+import com.parqueaderos.parqueadero.dominio.Parqueadero;
 public class ParqueaderoBuilder {
 	
 	private int nroMotos;

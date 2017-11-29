@@ -1,6 +1,6 @@
-package com.parqueaderos.parqueaderos.builder;
+package com.parqueaderos.parqueadero.builder;
 
-import com.parqueaderos.parqueaderos.dominio.Vehiculo;
+import com.parqueaderos.parqueadero.dominio.Vehiculo;
 
 public class VehiculoBuilder {
 	private String matricula;

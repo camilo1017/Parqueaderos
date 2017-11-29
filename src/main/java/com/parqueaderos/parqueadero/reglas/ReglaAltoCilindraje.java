@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos.reglas;
+package com.parqueaderos.parqueadero.reglas;
 
 public class ReglaAltoCilindraje {
 	public double cobrarCilindraje(int cilindraje) {

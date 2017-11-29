@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos.persistencia;
+package com.parqueaderos.parqueadero.persistencia;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
-package com.parqueaderos.parqueaderos.dominio;
-import com.parqueaderos.parqueaderos.reglas.ReglaAltoCilindraje;
-import com.parqueaderos.parqueaderos.reglas.ReglaPrimerLetraDeLaPlaca;
-import com.parqueaderos.parqueaderos.util.CalendarUtil;
+package com.parqueaderos.parqueadero.dominio;
+import com.parqueaderos.parqueadero.reglas.ReglaAltoCilindraje;
+import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
+import com.parqueaderos.parqueadero.util.CalendarUtil;
 
 public class Vigilante {
 	private static final String TIPO_MOTO="Moto";

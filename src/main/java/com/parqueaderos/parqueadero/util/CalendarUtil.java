@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueaderos.util;
+package com.parqueaderos.parqueadero.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
