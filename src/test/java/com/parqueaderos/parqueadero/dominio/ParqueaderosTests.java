@@ -45,7 +45,7 @@ public class ParqueaderosTests {
 	@Test
 	public void testCobrarMotoMenosDe9Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 12:59:49", moto);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 12:59:49", moto).getCosto();
 		double resultadoEsperado=1500;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
@@ -53,28 +53,28 @@ public class ParqueaderosTests {
 	public void testCobrarCilindraje() {
 		moto.setMatricula("BSS345");
 		moto.setCilindraje(600);
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 22:59:49", moto);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 22:59:49", moto).getCosto();
 		double resultadoEsperado=6000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMasDe24Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 11:59:49", moto);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 11:59:49", moto).getCosto();
 		double resultadoEsperado=5000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMenosDe24Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 23:59:49", moto);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 23:59:49", moto).getCosto();
 		double resultadoEsperado=4000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarMotoMasDe9HorasDespues() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 22:59:49", moto);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 22:59:49", moto).getCosto();
 		double resultadoEsperado=8000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
@@ -90,28 +90,28 @@ public class ParqueaderosTests {
 	@Test
 	public void testCobrarCarroMasDe24Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/11 12:59:49", carro);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 12:59:49", carro).getCosto();
 		double resultadoEsperado=11000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe9Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 16:59:49", carro);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 16:59:49", carro).getCosto();
 		double resultadoEsperado=7000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe24Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 19:59:49", carro);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 19:59:49", carro).getCosto();
 		double resultadoEsperado=8000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
 	@Test
 	public void testCobrarCarroMasDe9HorasDespues() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.cobrar("2014/10/09 10:59:44", "2014/10/10 21:59:49", carro);
+		double resultadoObtenido=vigilante.generarRecibo("2014/10/09 10:59:44", "2014/10/10 21:59:49", carro).getCosto();
 		double resultadoEsperado=16000;
 		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
