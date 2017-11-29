@@ -12,6 +12,7 @@ public class Vigilante {
 	private static final double PRECIO_DIA_MOTO=4000;
 	ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
 	ReglaAltoCilindraje reglaAltoCilindraje;
+	
 	public double cobrar(String fechaEntrada, String fechaSalida, Vehiculo vehiculo) {
 		double cobro=0;
 		Parqueadero parqueadero=new Parqueadero();
@@ -34,6 +35,7 @@ public class Vigilante {
 		}
 		return cobro;
 	}
+	
 	public double calcularCostoCarro(int horas, Vehiculo vehiculo) {
 		double cobro=0;
 		if(horas<9) {
@@ -43,6 +45,7 @@ public class Vigilante {
     	}
 		return cobro;
 	}
+	
 	private double calcularCostoMoto(int horas, Vehiculo vehiculo) {
 		double cobro=0;
 		if(horas<9) {
@@ -68,6 +71,7 @@ public class Vigilante {
 		}
 		return cobro;
 	}
+	
 	public double validarCostoSegunVehiculo(Vehiculo vehiculo) {
 		switch (vehiculo.getTipoVehiculo()) {
 		case TIPO_CARRO:
@@ -78,6 +82,7 @@ public class Vigilante {
 			return 0;
 		}		
 	}
+	
 	public double cobrarDias(int dias, int horas,Vehiculo vehiculo) {
 		double cobro=0;
 		switch(vehiculo.getTipoVehiculo()){
@@ -103,6 +108,7 @@ public class Vigilante {
 		
 		return cobro;
 	}
+	
 	public boolean validacionPlacaFecha(Vehiculo vehiculo,String fechaEntrada) {
 		reglaPrimerLetraDeLaPlaca=new ReglaPrimerLetraDeLaPlaca();
 		boolean validacionLetraDeLaPlaca=reglaPrimerLetraDeLaPlaca.validarLetraDeLaPlaca(vehiculo);

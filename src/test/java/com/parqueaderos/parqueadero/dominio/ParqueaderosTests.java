@@ -44,12 +44,12 @@ public class ParqueaderosTests {
 	}
 	@Test
 	public void testCobrarMotoMenosDe9Horas() {
-		/*moto.setMatricula("BSS345");
+		moto.setMatricula("BSS345");
 		double resultadoObtenido=vigilante.cobrar("2014/10/10 10:59:44", "2014/10/10 12:59:49", moto);
 		double resultadoEsperado=1500;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);*/	
+		assertEquals(resultadoEsperado, resultadoObtenido,0);
 	}
-	/*@Test
+	@Test
 	public void testCobrarCilindraje() {
 		moto.setMatricula("BSS345");
 		moto.setCilindraje(600);
@@ -182,5 +182,5 @@ public class ParqueaderosTests {
 		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/28 10:59:44");
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
-	}*/
+	}
 }
