@@ -8,7 +8,6 @@ public class Recibo {
 	
 	public Recibo() {		
 	}
-	
 	public Recibo(String fechaEntrada, String fechaSalida, Vehiculo vehiculo, double costo) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;

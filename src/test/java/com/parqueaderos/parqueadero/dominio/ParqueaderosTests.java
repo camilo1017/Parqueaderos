@@ -21,7 +21,6 @@ import com.parqueaderos.parqueadero.builder.VigilanteBuilder;
 import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueadero.util.CalendarUtil;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class ParqueaderosTests {
 	private Vehiculo moto;

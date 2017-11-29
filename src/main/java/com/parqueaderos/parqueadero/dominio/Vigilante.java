@@ -1,6 +1,7 @@
 package com.parqueaderos.parqueadero.dominio;
 import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueadero.reglas.ReglaTiposDeCobro;
+import com.parqueaderos.parqueadero.repositorio.RepositorioVehiculo;
 import com.parqueaderos.parqueadero.util.CalendarUtil;
 
 public class Vigilante {
@@ -8,15 +9,27 @@ public class Vigilante {
 	private static final String TIPO_CARRO="Carro";
 	ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
 	ReglaTiposDeCobro reglaTiposDeCobro;
+	private RepositorioVehiculo repositorioVehiculo;
+	
+	public Vigilante() {
+		
+	}
+	
+	public Vigilante(RepositorioVehiculo repositorioVehiculo) {
+		super();
+		this.repositorioVehiculo = repositorioVehiculo;
+	}
 	
 	public Recibo generarRecibo(String fechaEntrada, String fechaSalida, Vehiculo vehiculo) {
 		double cobro=0;
 		CalendarUtil calendarUtil=new CalendarUtil();
 		int horas=calendarUtil.calcularHoras(fechaEntrada, fechaSalida);
 		reglaTiposDeCobro=new ReglaTiposDeCobro();
-		if(validarIngreso(vehiculo, fechaEntrada))
+		if(validarIngreso(vehiculo, fechaEntrada)){
     		cobro=reglaTiposDeCobro.calcularCosto(horas,vehiculo);
-		return new Recibo(fechaEntrada,fechaSalida,vehiculo,cobro);
+			return new Recibo(fechaEntrada,fechaSalida,vehiculo,cobro);
+		}
+		return new Recibo();
 	}
 	public boolean validacionPlacaFecha(Vehiculo vehiculo,String fechaEntrada) {
 		reglaPrimerLetraDeLaPlaca=new ReglaPrimerLetraDeLaPlaca();
@@ -34,5 +47,9 @@ public class Vigilante {
          default:
         	 return false;
 		}
+	}
+	
+	public void registrarVehiculo(Vehiculo vehiculo) {
+		repositorioVehiculo.registrarVehiculo(vehiculo);
 	}
 }
