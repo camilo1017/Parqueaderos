@@ -1,4 +1,4 @@
-package com.parqueaderos.parqueadero.persistencia.repositorios;
+package com.parqueaderos.parqueadero.persistencia.repositorio;
 
 import javax.persistence.EntityManager;
 

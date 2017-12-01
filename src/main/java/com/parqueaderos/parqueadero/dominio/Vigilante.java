@@ -1,6 +1,8 @@
 package com.parqueaderos.parqueadero.dominio;
+
 import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
 import com.parqueaderos.parqueadero.reglas.ReglaTiposDeCobro;
+import com.parqueaderos.parqueadero.repositorio.RepositorioRecibo;
 import com.parqueaderos.parqueadero.repositorio.RepositorioVehiculo;
 import com.parqueaderos.parqueadero.util.CalendarUtil;
 
@@ -9,15 +11,17 @@ public class Vigilante {
 	private static final String TIPO_CARRO="Carro";
 	ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
 	ReglaTiposDeCobro reglaTiposDeCobro;
+	
 	private RepositorioVehiculo repositorioVehiculo;
+	private RepositorioRecibo repositorioRecibo;
 	
 	public Vigilante() {
 		
 	}
-	
-	public Vigilante(RepositorioVehiculo repositorioVehiculo) {
-		super();
+	public Vigilante(RepositorioVehiculo repositorioVehiculo, RepositorioRecibo repositorioRecibo) {
+		
 		this.repositorioVehiculo = repositorioVehiculo;
+		this.repositorioRecibo = repositorioRecibo;
 	}
 	
 	public Recibo generarRecibo(String fechaEntrada, String fechaSalida, Vehiculo vehiculo) {
@@ -27,16 +31,19 @@ public class Vigilante {
 		reglaTiposDeCobro=new ReglaTiposDeCobro();
 		if(validarIngreso(vehiculo, fechaEntrada)){
     		cobro=reglaTiposDeCobro.calcularCosto(horas,vehiculo);
+    		repositorioRecibo.insertar(new Recibo(fechaEntrada,fechaSalida,vehiculo,cobro));
 			return new Recibo(fechaEntrada,fechaSalida,vehiculo,cobro);
-		}
+		}	
 		return new Recibo();
 	}
+	
 	public boolean validacionPlacaFecha(Vehiculo vehiculo,String fechaEntrada) {
 		reglaPrimerLetraDeLaPlaca=new ReglaPrimerLetraDeLaPlaca();
 		boolean validacionLetraDeLaPlaca=reglaPrimerLetraDeLaPlaca.validarLetraDeLaPlaca(vehiculo);
 		boolean validacionDiaHabil=reglaPrimerLetraDeLaPlaca.validacionDiaHabil(fechaEntrada);
 		return ((validacionLetraDeLaPlaca && validacionDiaHabil) || !validacionLetraDeLaPlaca);
 	}
+	
 	public boolean validarIngreso(Vehiculo vehiculo, String fechaEntrada) {
 		Parqueadero parqueadero=new Parqueadero();
 		switch (vehiculo.getTipoVehiculo()) {
