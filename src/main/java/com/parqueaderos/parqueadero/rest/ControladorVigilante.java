@@ -1,5 +1,7 @@
 package com.parqueaderos.parqueadero.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.parqueaderos.parqueadero.dominio.Recibo;
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
 import com.parqueaderos.parqueadero.dominio.Vigilante;
+import com.parqueaderos.parqueadero.repositorio.RepositorioRecibo;
+import com.parqueaderos.parqueadero.repositorio.RepositorioVehiculo;
 
 @EnableAutoConfiguration
 @RestController
@@ -20,7 +24,11 @@ import com.parqueaderos.parqueadero.dominio.Vigilante;
 public class ControladorVigilante {
 	
 	@Autowired
-	Vigilante vigilante;	
+	Vigilante vigilante;
+	@Autowired
+	RepositorioRecibo repositorioRecibo;
+	@Autowired
+	RepositorioVehiculo repositorioVehiculo;
 	@RequestMapping(value = "/ingreso/vehiculo", method = RequestMethod.GET)
 	@ResponseBody
 	public String ingresarVehiculo() {
@@ -34,6 +42,7 @@ public class ControladorVigilante {
 		vigilante.registrarVehiculo(vehiculo);
 		return "Vehiculo ingresado: " + vehiculo.getMarca()+" "+vehiculo.getNombre();
 	}
+	
 	@RequestMapping(value = "/ingreso/recibo", method = RequestMethod.GET)
 	@ResponseBody
 	public String ingresarRecibo() {
@@ -48,5 +57,17 @@ public class ControladorVigilante {
 		String fechaSalida="2014/10/11 09:59:49";
 		Recibo recibo=vigilante.generarRecibo(fechaEntrada, fechaSalida, vehiculo);
 		return "Recibo generado: Fecha de entrada: \n" + recibo.getFechaEntrada()+"\n"+"Fecha de salida: "+recibo.getFechaSalida()+"\n"+"Costo: "+recibo.getCosto();
+	}
+	
+	@RequestMapping(value = "/ingreso/listarVehiculos", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Vehiculo> consultarListaDeVehiculos() {	
+		return repositorioVehiculo.listarVehiculos();
+	}
+	
+	@RequestMapping(value = "/ingreso/listarRecibos", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Recibo> consultarListaDeRecibos() {	
+		return repositorioRecibo.listarRecibos();
 	}
 }

@@ -11,13 +11,13 @@ public class Vigilante {
 	private static final String TIPO_CARRO="Carro";
 	ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
 	ReglaTiposDeCobro reglaTiposDeCobro;
-	
 	private RepositorioVehiculo repositorioVehiculo;
 	private RepositorioRecibo repositorioRecibo;
 	
 	public Vigilante() {
 		
 	}
+	
 	public Vigilante(RepositorioVehiculo repositorioVehiculo, RepositorioRecibo repositorioRecibo) {
 		
 		this.repositorioVehiculo = repositorioVehiculo;
