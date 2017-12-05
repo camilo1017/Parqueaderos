@@ -1,33 +1,41 @@
 package com.parqueaderos.parqueadero.dominio;
 
+import java.util.Calendar;
+
 public class Recibo {
-	private String fechaEntrada;
-	private String fechaSalida;
+	private Calendar fechaEntrada;
+	private Calendar fechaSalida;
 	private Vehiculo vehiculo;
 	private double costo;
 	
 	public Recibo() {		
 	}
-	public Recibo(String fechaEntrada, String fechaSalida, Vehiculo vehiculo, double costo) {
+	public Recibo(Calendar fechaEntrada,  Vehiculo vehiculo) {
+		this.fechaEntrada = fechaEntrada;
+		this.vehiculo = vehiculo;
+		
+	}
+	
+	public Recibo(Calendar fechaEntrada, Calendar fechaSalida, Vehiculo vehiculo, double costo) {
 		this.fechaEntrada = fechaEntrada;
 		this.fechaSalida = fechaSalida;
 		this.vehiculo = vehiculo;
 		this.costo = costo;
 	}
 
-	public String getFechaEntrada() {
+	public Calendar getFechaEntrada() {
 		return fechaEntrada;
 	}
 	
-	public void setFechaEntrada(String fechaEntrada) {
+	public void setFechaEntrada(Calendar fechaEntrada) {
 		this.fechaEntrada = fechaEntrada;
 	}
 	
-	public String getFechaSalida() {
+	public Calendar getFechaSalida() {
 		return fechaSalida;
 	}
 	
-	public void setFechaSalida(String fechaSalida) {
+	public void setFechaSalida(Calendar fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
 	

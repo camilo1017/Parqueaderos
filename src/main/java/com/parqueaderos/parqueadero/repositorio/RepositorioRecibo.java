@@ -9,4 +9,6 @@ public interface RepositorioRecibo {
 	void insertar(Recibo recibo);
 	public List<ReciboEntity> listarRecibosEntity();
 	public List<Recibo> listarRecibos();
+	public ReciboEntity obtenerReciboEntityPorPlaca(String matricula);
+	
 }

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
+import com.parqueaderos.parqueadero.excepciones.ParqueaderosException;
 import com.parqueaderos.parqueadero.persistencia.VehiculoEntity;
 import com.parqueaderos.parqueadero.persistencia.builder.VehiculoBuilder;
 import com.parqueaderos.parqueadero.repositorio.RepositorioVehiculo;
@@ -31,7 +32,7 @@ public class RepositorioVehiculoPersistencia implements RepositorioVehiculo{
 
 	@Override
 	public List<Vehiculo> listarVehiculos() {
-		List<VehiculoEntity> listaEntity = listarVehiculosEntity();
+		List<VehiculoEntity> listaEntity = listarVehiculosEntity();		
 		List<Vehiculo> listaVehiculos = new ArrayList<>();				
 		for (int i = 0; i < listaEntity.size(); ++i) {
 			Vehiculo vehiculo = new VehiculoBuilder().convertToDomain(listaEntity.get(i));
@@ -44,7 +45,9 @@ public class RepositorioVehiculoPersistencia implements RepositorioVehiculo{
 	public List<VehiculoEntity> listarVehiculosEntity() {
 		Query query = entityManager.createNamedQuery(VEHICULO_FIND_ALL);		
 		List<VehiculoEntity> resultList = query.getResultList();
-		return !resultList.isEmpty() ? resultList : null;
+		if(resultList.isEmpty())
+			throw new ParqueaderosException("No hay vehiculos en el parqueadero");
+		return resultList;
 	}
 
 }

@@ -9,18 +9,19 @@ import java.util.Locale;
 
 public class CalendarUtil {
 	private static final int SEGUNDOS_EN_UNA_HORA= 3600;
-	public int calcularHoras(String fechaEntradaS,String fechaSalidaS) {
-		Date dateFechaEntrada=stringToDate(fechaEntradaS, "/");
-		Date dateFechaSalida=stringToDate(fechaSalidaS, "/");
-		Calendar fechaEntrada=Calendar.getInstance();
-		Calendar fechaSalida=Calendar.getInstance();
-		fechaEntrada.setTime(dateFechaEntrada);
-		fechaSalida.setTime(dateFechaSalida);
+	public int calcularHoras(Calendar fechaEntrada,Calendar fechaSalida) {
 		long cantidadhoras= (ChronoUnit.SECONDS.between(fechaEntrada.toInstant(), fechaSalida.toInstant()));
 		double horasDecimal = (double)cantidadhoras/SEGUNDOS_EN_UNA_HORA;				
 		double horasEnMinutos =horasDecimal;
 		horasEnMinutos = Math.ceil(horasEnMinutos);		
 		return (int) horasEnMinutos;
+	}
+	
+	public static String calendarToString (Calendar fecha) {
+		fecha.add(Calendar.DATE, 1);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println(fecha.getTime());				
+		return  format1.format(fecha.getTime())	;
 	}
 	public static Date stringToDate(String fecha,String caracter){
 		String formatoHora=" HH:mm:ss";

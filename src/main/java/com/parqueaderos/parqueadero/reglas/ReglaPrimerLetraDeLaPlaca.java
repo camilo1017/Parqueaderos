@@ -1,5 +1,7 @@
 package com.parqueaderos.parqueadero.reglas;
 
+import java.util.Calendar;
+
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
 import com.parqueaderos.parqueadero.util.CalendarUtil;
 
@@ -8,7 +10,7 @@ public class ReglaPrimerLetraDeLaPlaca {
 		String[] arrayMatricula=vehiculo.getMatricula().split("");
 		return arrayMatricula[0].equals("A");
 	}
-	public boolean validacionDiaHabil(String fechaEntrada) {
-		return CalendarUtil.obtenerDiaDeLaSemana(fechaEntrada).equals("Domingo") || CalendarUtil.obtenerDiaDeLaSemana(fechaEntrada).equals("Lunes");
+	public boolean validacionDiaHabil(Calendar fechaEntrada) {
+		return fechaEntrada.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY ||fechaEntrada.get(Calendar.DAY_OF_WEEK)==Calendar.MONDAY;
 	}
 }

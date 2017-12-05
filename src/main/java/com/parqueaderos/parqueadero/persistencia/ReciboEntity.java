@@ -1,5 +1,7 @@
 package com.parqueaderos.parqueadero.persistencia;
 
+import java.util.Calendar;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity(name = "Recibo")
-@NamedQuery(name = "recibo.findAll", query = "SELECT recibo from Recibo recibo")
+@NamedQueries({
+	
+	@NamedQuery(name = "recibo.findAll", query = "SELECT recibo from Recibo recibo"),
+	@NamedQuery(name = "recibo.findByMatricula", query = "SELECT recibo from Recibo recibo WHERE recibo.vehiculo.matricula= :matricula AND recibo.valor=0")
+})
 public class ReciboEntity {
 	
 	@Id
@@ -23,10 +30,10 @@ public class ReciboEntity {
 	private VehiculoEntity vehiculo;
 	
 	@Column//(name = "fecha_Entrada")
-	private String fechaEntrada;
+	private Calendar fechaEntrada;
 	
 	@Column//(name = "fecha_Salida")
-	private String fechaSalida;
+	private Calendar fechaSalida;
 
 	@Column//(name = "valor")
 	private double valor;
@@ -39,19 +46,19 @@ public class ReciboEntity {
 		this.vehiculo = vehiculo;
 	}
 
-	public String getFechaEntrada() {
+	public Calendar getFechaEntrada() {
 		return fechaEntrada;
 	}
 
-	public void setFechaEntrada(String fechaEntrada) {
+	public void setFechaEntrada(Calendar fechaEntrada) {
 		this.fechaEntrada = fechaEntrada;
 	}
 
-	public String getFechaSalida() {
+	public Calendar getFechaSalida() {
 		return fechaSalida;
 	}
 
-	public void setFechaSalida(String fechaSalida) {
+	public void setFechaSalida(Calendar fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
 

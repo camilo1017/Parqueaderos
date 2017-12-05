@@ -3,6 +3,7 @@ package com.parqueaderos.parqueadero.repositorio;
 import java.util.List;
 
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
+import com.parqueaderos.parqueadero.persistencia.ReciboEntity;
 import com.parqueaderos.parqueadero.persistencia.VehiculoEntity;
 
 public interface RepositorioVehiculo {

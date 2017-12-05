@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.parqueaderos.parqueadero.dominio.Recibo;
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
+import com.parqueaderos.parqueadero.excepciones.ParqueaderosException;
 import com.parqueaderos.parqueadero.persistencia.ReciboEntity;
 import com.parqueaderos.parqueadero.persistencia.VehiculoEntity;
 import com.parqueaderos.parqueadero.persistencia.builder.ReciboBuilder;
@@ -19,6 +20,8 @@ import com.parqueaderos.parqueadero.repositorio.RepositorioRecibo;
 @Repository
 public class RepositorioReciboPersistencia implements RepositorioRecibo{
 	
+	private final static String RECIBO_FIND_BY_MATRICULA = "recibo.findByMatricula";
+	private final static String MATRICULA = "matricula";
 	private final static String RECIBO_FIND_ALL = "recibo.findAll";
 	private ReciboBuilder reciboBuilder=new ReciboBuilder();
 	EntityManager entityManager;
@@ -37,7 +40,9 @@ public class RepositorioReciboPersistencia implements RepositorioRecibo{
 	public List<ReciboEntity> listarRecibosEntity() {
 		Query query = entityManager.createNamedQuery(RECIBO_FIND_ALL);		
 		List<ReciboEntity> resultList = query.getResultList();
-		return !resultList.isEmpty() ? resultList : null;
+		if(resultList.isEmpty())
+			throw new ParqueaderosException("No hay recibos que mostrar");
+		return resultList;
 	}
 
 	@Override
@@ -50,5 +55,12 @@ public class RepositorioReciboPersistencia implements RepositorioRecibo{
 		}
 		return listaRecibos;
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	public ReciboEntity obtenerReciboEntityPorPlaca(String matricula) {
+		Query query = entityManager.createNamedQuery(RECIBO_FIND_BY_MATRICULA);
+		query.setParameter(MATRICULA, matricula);		
+		List listarecibos = query.getResultList();
+		return !listarecibos.isEmpty() ? (ReciboEntity) listarecibos.get(0) : null;
+	}
 }

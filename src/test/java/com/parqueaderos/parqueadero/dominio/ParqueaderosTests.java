@@ -2,6 +2,8 @@ package com.parqueaderos.parqueadero.dominio;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +12,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
 import java.awt.geom.RectangularShape;
+import java.util.Calendar;
 
 import static org.mockito.Mockito.mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +21,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.parqueaderos.parqueadero.builder.ParqueaderoBuilder;
 import com.parqueaderos.parqueadero.builder.VehiculoBuilder;
 import com.parqueaderos.parqueadero.builder.VigilanteBuilder;
+import com.parqueaderos.parqueadero.excepciones.ParqueaderosException;
 import com.parqueaderos.parqueadero.reglas.ReglaPrimerLetraDeLaPlaca;
+import com.parqueaderos.parqueadero.reglas.ReglaTiposDeCobro;
+import com.parqueaderos.parqueadero.repositorio.RepositorioRecibo;
 import com.parqueaderos.parqueadero.util.CalendarUtil;
 
 @SpringBootTest
@@ -30,6 +36,10 @@ public class ParqueaderosTests {
 	private Vigilante vigilante;
 	private Parqueadero parqueadero;
 	private ReglaPrimerLetraDeLaPlaca reglaPrimerLetraDeLaPlaca;
+	private ReglaTiposDeCobro reglaTiposDeCobro = new ReglaTiposDeCobro();
+	private Calendar fechaEntrada =Calendar.getInstance();
+	private Calendar fechaSalida=Calendar.getInstance();
+	private RepositorioRecibo repositorioRecibo;
 	@Before
 	public void initTest()
 	{			
@@ -44,38 +54,32 @@ public class ParqueaderosTests {
 	@Test
 	public void testCobrarMotoMenosDe9Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 12:59:49", moto).getCosto();
-		double resultadoEsperado=1500;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		moto.setCilindraje(100);
+		assertEquals(1500, reglaTiposDeCobro.calcularCosto(3,moto),0);
 	}
 	@Test
 	public void testCobrarCilindraje() {
 		moto.setMatricula("BSS345");
 		moto.setCilindraje(600);
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 22:59:49", moto).getCosto();
-		double resultadoEsperado=6000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		assertEquals(3500, reglaTiposDeCobro.calcularCosto(3,moto),0);
 	}
 	@Test
 	public void testCobrarMotoMasDe24Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 11:59:49", moto).getCosto();
-		double resultadoEsperado=5000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		moto.setCilindraje(100);
+		assertEquals(4500, reglaTiposDeCobro.calcularCosto(25,moto),0);
 	}
 	@Test
 	public void testCobrarMotoMenosDe24Horas() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 23:59:49", moto).getCosto();
-		double resultadoEsperado=4000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		moto.setCilindraje(100);
+		assertEquals(4000, reglaTiposDeCobro.calcularCosto(11,moto),0);
 	}
 	@Test
 	public void testCobrarMotoMasDe9HorasDespues() {
 		moto.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 22:59:49", moto).getCosto();
-		double resultadoEsperado=8000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		moto.setCilindraje(100);
+		assertEquals(8000, reglaTiposDeCobro.calcularCosto(34,moto),0);
 	}
 	@Test
 	public void testNoHayCuposMotos() {
@@ -89,30 +93,26 @@ public class ParqueaderosTests {
 	@Test
 	public void testCobrarCarroMasDe24Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/11 12:59:49", carro).getCosto();
-		double resultadoEsperado=11000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		carro.setCilindraje(1000);
+		assertEquals(11000, reglaTiposDeCobro.calcularCosto(27,carro),0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe9Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 16:59:49", carro).getCosto();
-		double resultadoEsperado=7000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		carro.setCilindraje(1000);
+		assertEquals(7000, reglaTiposDeCobro.calcularCosto(7,carro),0);
 	}
 	@Test
 	public void testCobrarCarroMenosDe24Horas() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/10 10:59:44", "2014/10/10 19:59:49", carro).getCosto();
-		double resultadoEsperado=8000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		carro.setCilindraje(1000);
+		assertEquals(8000, reglaTiposDeCobro.calcularCosto(12,carro),0);
 	}
 	@Test
 	public void testCobrarCarroMasDe9HorasDespues() {
 		carro.setMatricula("BSS345");
-		double resultadoObtenido=vigilante.generarRecibo("2014/10/09 10:59:44", "2014/10/10 21:59:49", carro).getCosto();
-		double resultadoEsperado=16000;
-		assertEquals(resultadoEsperado, resultadoObtenido,0);
+		carro.setCilindraje(1000);
+		assertEquals(16000, reglaTiposDeCobro.calcularCosto(35,carro),0);
 	}
 	@Test
 	public void testNoHayCuposCarros() {
@@ -150,8 +150,10 @@ public class ParqueaderosTests {
 	@Test
 	public void testCalcularNumeroDeHoras() {
 		CalendarUtil calendarUtil = new CalendarUtil();
-		int resultadoObtenido=calendarUtil.calcularHoras("2014/10/09 10:59:44", "2014/10/11 14:59:49");
-		int resultadoEsperado=53;
+		fechaEntrada.set(2010, Calendar.NOVEMBER, 12, 11, 55, 0);
+		fechaSalida.set(2010, Calendar.NOVEMBER, 12, 22, 56, 0);
+		int resultadoObtenido=calendarUtil.calcularHoras(fechaEntrada, fechaSalida);
+		int resultadoEsperado=12;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
@@ -164,22 +166,50 @@ public class ParqueaderosTests {
 	@Test
 	public void testValidarPlacaEspecial() {
 		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/27 10:59:44");
+		fechaEntrada.set(2017, Calendar.NOVEMBER, 27, 10, 59, 44);
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,fechaEntrada);
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testValidarPlacaNoEspecial() {
 		moto=VehiculoBuilder.getInstance().withMatricula("BSS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/28 10:59:44");
+		fechaEntrada.set(2017, Calendar.NOVEMBER, 27, 10, 59, 44);
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,fechaEntrada);
 		boolean resultadoEsperado=true;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
 	@Test
 	public void testValidarPlacaDiaNoHabil() {
 		moto=VehiculoBuilder.getInstance().withMatricula("ASS456").build();
-		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,"2017/11/28 10:59:44");
+		fechaEntrada.set(2017, Calendar.NOVEMBER, 28, 10, 59, 44);
+		boolean resultadoObtenido=vigilante.validacionPlacaFecha(moto,fechaEntrada);
 		boolean resultadoEsperado=false;
 		assertEquals(resultadoEsperado, resultadoObtenido);
 	}
+	
+	@Test
+	public void testValidarIngresoCarroYMoto() {
+		carro=VehiculoBuilder.getInstance().withMatricula("BSS456").withTipoVehiculo("Carro").withCilindraje(1200).build();
+		moto=VehiculoBuilder.getInstance().withMatricula("BSS656").withTipoVehiculo("Moto").withCilindraje(1200).build();
+		fechaEntrada.set(2017, Calendar.NOVEMBER, 28, 10, 59, 44);
+		boolean resultadoObtenido1=vigilante.validarIngreso(carro, fechaEntrada);
+		boolean resultadoObtenido2=vigilante.validarIngreso(moto, fechaEntrada);
+		boolean resultadoEsperado=true;
+		assertEquals(resultadoEsperado, resultadoObtenido1);
+		assertEquals(resultadoEsperado, resultadoObtenido2);
+	}
+	@Test
+	public void testValidarIngresoException() {
+		carro=VehiculoBuilder.getInstance().withMatricula("BSS456").withTipoVehiculo("Cicla").build();
+		fechaEntrada.set(2017, Calendar.NOVEMBER, 28, 10, 59, 44);
+		try {
+			boolean resultadoObtenido=vigilante.validarIngreso(carro, fechaEntrada);
+			fail();
+
+		} catch (ParqueaderosException e) {			
+			Assert.assertEquals("Solo es posible ingresar un Carro o una Moto al sistema", e.getMessage());
+		}
+	}
+
 }
