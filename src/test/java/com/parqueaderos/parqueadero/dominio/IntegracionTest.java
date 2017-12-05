@@ -32,8 +32,7 @@ public class IntegracionTest {
 	public void testRegistrarVehiculo() {		
 		//vigilante = new Vigilante(repositorioVehiculoPersistencia);
 		vehiculo =VehiculoBuilder.getInstance().withCilindraje(1400).withMarca("Chevrolet")
-		.withMatricula("KAS353").withNombre("Sail").build();
+		.withMatricula("KAS320").withNombre("Sail").build();
 		vigilante.registrarVehiculo(vehiculo);	
-		System.out.println("Hola");
 	}
 }
