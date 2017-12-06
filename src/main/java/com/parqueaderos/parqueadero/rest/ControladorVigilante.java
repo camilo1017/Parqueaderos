@@ -65,6 +65,7 @@ public class ControladorVigilante {
 		return repositorioVehiculo.listarVehiculos();
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value = "/listarRecibos", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Recibo> consultarListaDeRecibos() {	

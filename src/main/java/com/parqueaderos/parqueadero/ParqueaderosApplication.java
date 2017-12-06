@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
+import com.parqueaderos.parqueadero.dominio.Parqueadero;
 import com.parqueaderos.parqueadero.dominio.Recibo;
 import com.parqueaderos.parqueadero.dominio.Vehiculo;
 import com.parqueaderos.parqueadero.dominio.Vigilante;
